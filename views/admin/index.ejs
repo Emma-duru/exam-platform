@@ -1,0 +1,162 @@
+<%- include("../layouts/header") %> 
+    <!-- Body -->
+    <main>
+        <div class="container">
+            <!-- Admin Search -->
+            <section class="admin-search my-4">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form id="admin-search" class="input-group mb-3">
+                            <input type="text" name="adminName" class="form-control" placeholder="Search for admin" aria-label="Search for admin" aria-describedby="a-addon2">
+                            <button type="submit" class="btn btn-primary" id="a-addon2">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <!-- Admin Search -->
+
+            <!-- Admin Table -->
+            <section class="user-table my-4">
+                <!-- Create Admin Modal Button-->
+                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#createAdminModal">
+                Create Admin
+                </button>
+                <!-- Create Admin Modal Button-->
+
+                <!-- Create Admin Modal -->
+                <div class="modal fade" id="createAdminModal" tabindex="-1" aria-labelledby="createAdminModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="createAdminModalLabel">Create Admin</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <!-- Create Admin Form -->
+                            <form id="admin-create">
+                                <div class="modal-body p-4">
+                                   <input type="text" name="firstname" placeholder="Firstname" class="form-control my-2">
+                                   <input type="text" name="lastname" placeholder="Lastname" class="form-control my-2">
+                                   <input type="email" name="email" placeholder="Email" class="form-control my-2">
+                                   <input type="tel" name="phone_number" placeholder="Phone Number" class="form-control my-2">
+                                   <textarea name="address" placeholder="Address" rows="3" class="form-control my-2"></textarea>
+                                   <input type="password" name="password" placeholder="Password" class="form-control my-2">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+                            <!-- Create Admin Form -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Create Admin Modal -->
+
+
+
+                <h4>ADMINS</h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Firstname</th>
+                            <th scope="col">Lastname</th>
+                            <th scope="col">Date Joined</th>
+                            <th scope="col">Exams Created</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone Number</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% admins.reverse().forEach(admin => { %>
+                            <tr>
+                                <td scope="row"><%= admin.firstname %> </td>
+                                <td><%= admin.lastname %> </td>
+                                <td><%= admin.date_joined %> </td>
+                                <td><%= admin.exams.length %> </td>
+                                <td><%= admin.email %> </td>
+                                <td><%= admin.phone_number %> </td>
+                                <td><a href="/admin/<%= admin._id %>" class="btn btn-info">View</a></td>
+                                <td class="text-center">
+                                    <!-- Edit Modal Button -->
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editAdminModal<%= admin._id %>"><i class="fas fa-pen text-warning"></i></a>
+                                    <!-- Edit Modal Button -->
+
+                                    <!-- Edit Admin Modal -->
+                                    <div class="modal fade" id="editAdminModal<%= admin._id %>" tabindex="-1" aria-labelledby="editAdminModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="editAdminModalLabel">Edit Admin</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+
+                                                <!-- Edit Admin Form -->
+                                                <form class="admin-edit">
+                                                    <div class="modal-body p-4">
+                                                        <input type="text" name="firstname" placeholder="Firstname" class="form-control my-2" value="<%= admin.firstname %>">
+                                                        <input type="text" name="lastname" placeholder="Lastname" class="form-control my-2" value="<%= admin.lastname %>">
+                                                        <input type="email" name="email" placeholder="Email" class="form-control my-2" value="<%= admin.email %>">
+                                                        <input type="tel" name="phone_number" placeholder="Phone Number" class="form-control my-2" value="<%= admin.phone_number %>">
+                                                        <textarea name="address" rows="3" class="form-control my-2"><%= admin.address %></textarea>
+                                                        <input type="hidden" name="id" value="<%= admin._id %>">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Edit</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    </div>
+                                                </form>
+                                                <!-- Edit Admin Form -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Edit Admin Modal -->
+                                </td>
+                                <td class="text-center">
+                                    <!-- Delete Modal Button -->
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#deleteAdminModal<%= admin._id %>"><i class="far fa-trash-alt text-danger"></i></a>
+                                    <!-- Delete Modal Button -->
+
+                                    <!-- Delete Admin Modal -->
+                                    <div class="modal fade" id="deleteAdminModal<%= admin._id %>" tabindex="-1" aria-labelledby="deleteAdminModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteAdminModalLabel">Delete Admin</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+
+                                                <!-- Delete Admin Form -->
+                                                <form class="admin-delete">
+                                                    <div class="modal-body p-4">
+                                                        <p>Are you sure you want to delete <%= admin.firstname %> <%= admin.lastname %>?</p>
+                                                        <input type="hidden" name="id" value="<%= admin._id %>">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Delete</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    </div>
+                                                </form>
+                                                <!-- Delete Admin Form -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Delete Admin Modal -->
+                                </td>
+                                
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </section>
+            <!-- Admin Table -->
+        </div>
+    </main>
+    <!-- Body -->
+    
+    <script src="js/admin.js"></script>
+
+<%- include("../layouts/footer") %> 

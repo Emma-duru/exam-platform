@@ -1,0 +1,102 @@
+<%- include("../layouts/header") %> 
+
+ <!-- Body -->
+    <main>
+        <div class="container">
+            <!-- Cards Section -->
+            <section class="top-cards my-4">
+                <div class="row">
+                    <div class="col-md-4 p-2">
+                        <div class="card text-center">
+                            <div class="card-header">
+                                <h5>ALL STUDENTS</h5>
+                            </div>
+                            <div class="card-body">
+                                <h5><%= students.length %> </h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="col-md-4 p-2">
+                        <div class="card text-center">
+                            <div class="card-header">
+                                <h5>EXAMS</h5>
+                            </div>
+                            <div class="card-body">
+                                <h5><%= exams.length %> </h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="col-md-4 p-2">
+                        <div class="card text-center">
+                            <div class="card-header">
+                                <h5>QUESTIONS</h5>
+                            </div>
+                            <div class="card-body">
+                                <h5><%= questions.length %></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Cards Section -->
+
+            <!-- Table Section -->
+            <section class="bottom-table my-4">
+                <div class="row">
+                    <div class="col-md-5">
+                        <h4>STUDENTS</h4>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Student</th>
+                                    <th scope="col">Date Joined</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% students.forEach(student => { %>
+                                    <tr>
+                                        <td scope="row"><%= student.full_name %> </td>
+                                        <td><%= student.date_joined %> </td>
+                                        <td><a class="btn btn-info" href="profile.html">View</a></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-md-7">
+                        <h4>EXAMS</h4>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Date Created</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% exams.forEach(exam => { %>
+                                    <tr>
+                                        <td scope="row"><%= exam.name %></td>
+                                        <td><%= exam.date_created %> </td>
+                                        <td><%= exam.status %> </td>
+                                        <td><a href="/exam/<%= exam._id %>" class="btn btn-info">View</a></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <!-- Body -->
+    
+
+<%- include("../layouts/footer") %> 

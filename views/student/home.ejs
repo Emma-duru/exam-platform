@@ -1,0 +1,56 @@
+<%- include("../layouts/header") %> 
+    <!-- Body -->
+    <main>
+        <div class="container">
+            <!-- Student Search -->
+            <section class="student-search my-4">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form id="student-search" class="input-group mb-3">
+                            <input type="text" name="studentName" class="form-control" placeholder="Search for student" aria-label="Search for student" aria-describedby="a-addon2">
+                            <button type="submit" class="btn btn-primary" id="a-addon2">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <!-- Student Search -->
+
+            <!-- Student Table -->
+            <section class="user-table my-4">
+
+                <h4>STUDENTS</h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Firstname</th>
+                            <th scope="col">Lastname</th>
+                            <th scope="col">Date Joined</th>
+                            <th scope="col">Exams Created</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone Number</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% students.reverse().forEach(student => { %>
+                            <tr>
+                                <td scope="row"><%= student.firstname %> </td>
+                                <td><%= student.lastname %> </td>
+                                <td><%= student.date_joined %> </td>
+                                <td>5</td>
+                                <td><%= student.email %> </td>
+                                <td><%= student.phone_number %> </td>
+                                <td><a href="/student/<%= student._id %>" class="btn btn-info">View</a></td>                                
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </section>
+            <!-- Student Table -->
+        </div>
+    </main>
+    <!-- Body -->
+    
+    <script src="js/student.js"></script>
+
+<%- include("../layouts/footer") %> 

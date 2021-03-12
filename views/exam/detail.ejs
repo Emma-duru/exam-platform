@@ -1,0 +1,222 @@
+<%- include("../layouts/header") %>
+
+<!-- Body -->
+    <main>
+        <div class="container">
+            
+            <!-- Cards Section -->
+            <section class="top-cards my-4">
+                <div class="row">
+                    <div class="col-md-4 p-2">
+                        <div class="card text-center">
+                            <div class="card-header">
+                                <h5><%= exam.name.toUpperCase() %> </h5>
+                            </div>
+                            <div class="card-body">
+                                <p>Created on <%= exam.date_created %> by <strong><%= exam.author.full_name %></strong> </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="col-md-4 p-2">
+                        <div class="card text-center">
+                            <div class="card-header">
+                                <h5>NO. OF QUESTIONS</h5>
+                            </div>
+                            <div class="card-body">
+                                <h5><%= exam.questions.length %> </h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="col-md-4 p-2">
+                        <div class="card text-center">
+                            <div class="card-header">
+                                <h5>STATUS</h5>
+                            </div>
+                            <div class="card-body">
+                                <h5><%= exam.status %> </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Cards Section -->
+
+            <!-- Question Search -->
+            <section class="question-search my-4">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Search for question" aria-label="Search for question" aria-describedby="a-addon2">
+                            <a class="btn btn-primary" type="a" id="a-addon2">Search</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Question Search -->
+
+            <!-- Question Table -->
+            <section class="question-table my-4">
+                <!-- Create Question Modal Button-->
+                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Create Question
+                </button>
+                <!-- Create Question Modal Button-->
+
+                <!-- Create Question Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Create Question</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <!-- Create Question Form -->
+                            <form id="question-create">
+                                <div class="modal-body p-4">
+                                   <input type="text" name="question" placeholder="Question" class="form-control my-2">
+                                   <input type="text" name="A" placeholder="Option A" class="form-control my-2">
+                                   <input type="text" name="B" placeholder="Option B" class="form-control my-2">
+                                   <input type="text" name="C" placeholder="Option C" class="form-control my-2">
+                                   <input type="text" name="D" placeholder="Option D" class="form-control my-2">
+                                   <select name="correctAnswer" class="form-control">
+                                        <option>---- Correct Answer ----</option>
+                                        <option value="A">Option A</option>
+                                        <option value="B">Option B</option>
+                                        <option value="C">Option C</option>
+                                        <option value="D">Option D</option>
+                                   </select>
+                                   <input type="hidden" name="examId" value="<%= exam._id %>">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+                            <!-- Create Question Form -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Create Question Modal -->
+
+
+
+                <h4>QUESTIONS</h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Question</th>
+                            <th scope="col">Date Created</th>
+                            <th scope="col">Option A</th>
+                            <th scope="col">Option B</th>
+                            <th scope="col">Option C</th>
+                            <th scope="col">Option D</th>
+                            <th scope="col">Correct Answer</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% exam.questions.reverse().forEach(question => { %>
+                            <tr>
+                                <td scope="row"><%= question.name %> </td>
+                                <td><%= question.date_created %> </td>
+                                <td><%= question.options.A %> </td>
+                                <td><%= question.options.B %> </td>
+                                <td><%= question.options.C %> </td>
+                                <td><%= question.options.D %> </td>
+                                <td><%= question.correctAnswer %> </td>
+                                <td>
+                                    <!-- Edit Question Modal Button-->
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editQuestion<%= question._id %>"><i class="fas fa-pen text-warning"></i></a>
+                                    <!-- Edit Question Modal Button-->
+
+                                    <!-- Edit Question Modal -->
+                                    <div class="modal fade" id="editQuestion<%= question._id %>" tabindex="-1" aria-labelledby="editQuestion<%= question._id %>Label" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="editQuestion<%= question._id %>Label">Edit Question</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+
+                                                <!-- Edit Question Form -->
+                                                <form class="question-edit">
+                                                    <div class="modal-body p-4">
+                                                        <input type="text" name="question" placeholder="Question" class="form-control my-2" value="<%= question.name %>">
+                                                        <input type="text" name="A" placeholder="Option A" class="form-control my-2" value="<%= question.options.A %>">
+                                                        <input type="text" name="B" placeholder="Option B" class="form-control my-2" value="<%= question.options.B %>">
+                                                        <input type="text" name="C" placeholder="Option C" class="form-control my-2" value="<%= question.options.C %>">
+                                                        <input type="text" name="D" placeholder="Option D" class="form-control my-2" value="<%= question.options.D %>">
+                                                        <select name="correctAnswer" class="form-control">
+                                                                <option>---- Correct Answer ----</option>
+                                                                <option value="A">Option A</option>
+                                                                <option value="B">Option B</option>
+                                                                <option value="C">Option C</option>
+                                                                <option value="D">Option D</option>
+                                                        </select>
+                                                        <input type="hidden" name="examId" value="<%= exam._id %>">
+                                                        <input type="hidden" name="questionId" value="<%= question._id %>">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Edit</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    </div>
+                                                </form>
+                                                <!-- Edit Question Form -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Edit Question Modal -->
+
+                                </td>
+                                <td>
+                                    <!-- Delete Question Modal Button-->
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#deleteQuestion<%= question._id %>"><i class="far fa-trash-alt text-danger"></i></a>
+                                    <!-- Delete Question Modal Button-->
+
+                                    <!-- Delete Question Modal -->
+                                    <div class="modal fade" id="deleteQuestion<%= question._id %>" tabindex="-1" aria-labelledby="deleteQuestion<%= question._id %>Label" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteQuestion<%= question._id %>Label">Delete Question</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+
+                                                <!-- Delete Question Form -->
+                                                <form class="question-delete">
+                                                    <div class="modal-body p-4">
+                                                        <p>Are you sure you want to delete "<strong><%= question.name %></strong>"?</p>
+                                                        <input type="hidden" name="examId" value="<%= exam._id %>">
+                                                        <input type="hidden" name="questionId" value="<%= question._id %>">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Delete</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    </div>
+                                                </form>
+                                                <!-- Delete Question Form -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Delete Question Modal -->
+
+                                </td>
+                            </tr>
+                        <% }) %> 
+                    </tbody>
+                </table>
+            </section>
+            <!-- Question Table -->
+        </div>
+    </main>
+    <!-- Body -->
+
+<script src="/js/question.js"></script>
+
+<%- include("../layouts/footer") %> 

@@ -1,0 +1,196 @@
+<%- include("../layouts/header") %> 
+
+    <!-- Body -->
+    <main>
+        <div class="container">
+            <!-- Cards Section -->
+            <section class="top-cards my-4">
+                <div class="row">
+                    <div class="col-md-4 p-2">
+                        <div class="card text-center">
+                            <div class="card-header">
+                                <h5>ALL EXAMS</h5>
+                            </div>
+                            <div class="card-body">
+                                <h5><%= exams.length %> </h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="col-md-4 p-2">
+                        <div class="card text-center">
+                            <div class="card-header">
+                                <h5>PUBLISHED</h5>
+                            </div>
+                            <div class="card-body">
+                                <h5><%= publishedExams.length %> </h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="col-md-4 p-2">
+                        <div class="card text-center">
+                            <div class="card-header">
+                                <h5>DRAFT</h5>
+                            </div>
+                            <div class="card-body">
+                                <h5><%= draftExams.length %> </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Cards Section -->
+
+            <!-- Exam Search -->
+            <section class="exam-search my-4">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form id="exam-search" class="input-group mb-3">
+                            <input type="text" name="examName" class="form-control" placeholder="Search for exam" aria-label="Search for exam" aria-describedby="button-addon2">
+                            <button class="btn btn-primary" type="submit" id="button-addon2">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <!-- Exam Search -->
+
+            <!-- Exam Table -->
+            <section class="bottom-table my-4">
+                <!-- Create Exam Modal Button-->
+                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#examCreateModal">
+                Create Exam
+                </button>
+                <!-- Create Exam Modal Button-->
+
+                <!-- Create Exam Modal -->
+                <div class="modal fade" id="examCreateModal" tabindex="-1" aria-labelledby="examCreateModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="examCreateModalLabel">Create Exam</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <!-- Create Exam Form -->
+                            <form id="exam-create">
+                                <div class="modal-body p-4">
+                                   <input type="text" name="examName" placeholder="Exam name" class="form-control my-2">
+                                   <select name="status" class="form-control my-2">
+                                       <option value="Draft">Draft</option>
+                                       <option value="Published">Published</option>
+                                   </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+                            <!-- Create Exam Form -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Create Exam Modal -->
+
+
+
+                <h4>EXAMS</h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Date Created</th>
+                            <th scope="col">Author</th>
+                            <th scope="col">No. of Questions</th>
+                            <th scope="col">Status</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% exams.reverse().forEach(exam => { %> 
+                        <tr>
+                            <td scope="row"><%= exam.name %> </td>
+                            <td><%= exam.date_created %> </td>
+                            <td><%= exam.author.full_name %> </td>
+                            <td><%= exam.questions.length %> </td>
+                            <td><%= exam.status %> </td>
+                            <td><a href="/exam/<%= exam._id %>" class="btn btn-info">View</a></td>
+                            <td>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#examEditModal<%= exam._id %>"><i class="fas fa-pen text-warning"></i></a>
+                                
+                                <!-- Edit Exam Modal -->
+                                <div class="modal fade" id="examEditModal<%= exam._id %>" tabindex="-1" aria-labelledby="examEditModal<%= exam._id %>Label" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="examEditModal<%= exam._id %>Label">Edit Exam</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+
+                                            <!-- Edit Exam Form -->
+                                            <form class="exam-edit">
+                                                <div class="modal-body p-4">
+                                                    <input type="text" name="examName" placeholder="Exam name" class="form-control my-2" value="<%= exam.name %>">
+                                                    <select name="status" class="form-control my-2">
+                                                        <option value="Draft">Draft</option>
+                                                        <option value="Published">Published</option>
+                                                    </select>
+                                                    <input type="hidden" name="id" value="<%= exam._id %>">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Edit</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                </div>
+                                            </form>
+                                            <!-- Edit Exam Form -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Edit Exam Modal -->
+                            </td>
+                            <td>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#examDeleteModal<%= exam._id %>"><i class="far fa-trash-alt text-danger"></i></a>
+                                
+                                <!-- Delete Exam Modal -->
+                                <div class="modal fade" id="examDeleteModal<%= exam._id %>" tabindex="-1" aria-labelledby="examDeleteModal<%= exam._id %>Label" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="examDeleteModal<%= exam._id %>Label">Delete Exam</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+
+                                            <!-- Delete Exam Form -->
+                                            <form class="exam-delete">
+                                                <div class="modal-body p-4">
+                                                    <p>Are you sure you want to delete <strong><%= exam.name %></strong>?</p>
+                                                    <input type="hidden" name="id" value="<%= exam._id %>">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Delete</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                </div>
+                                            </form>
+                                            <!-- Delete Exam Form -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Delete Exam Modal -->
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </section>
+            <!-- Exam Table -->
+        </div>
+    </main>
+    <!-- Body -->
+
+    <script src="/js/exam.js"></script>
+
+<%- include("../layouts/footer") %>
